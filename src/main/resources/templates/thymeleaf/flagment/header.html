@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Header Example</title>
+<!-- 필요한 CSS, JS 파일 링크 추가 -->
+</head>
+<body>
+	<div class="header" th:fragment="headerFragment">
+		<div class="header_centerBox">
+			<h1>
+				<img th:src="@{/images/logo.png}" width="143" height="19" />
+			</h1>
+			<div class="lnb">
+				<dl>
+					<dt class="hidden">로그인, 로그아웃, 사이트맵 , 설정이 들어가는 자리입니다.</dt>
+					<dd>엔키관리자님 환영합니다.</dd>
+					<dd>
+						<a href="#" class="lbtn">로그아웃</a>
+					</dd>
+					<dd class="lbar">
+						<img th:src="@{/images/lnb_bar.gif}" width="1" height="10" />
+					</dd>
+					<dd>
+						<a href="#">사이트맵</a>
+					</dd>
+					<dd class="lbar">
+						<img th:src="@{/images/lnb_bar.gif}" width="1" height="10" />
+					</dd>
+					<dd>
+						<a href="#">설정</a>
+					</dd>
+				</dl>
+			</div>
+			<!--Local Navigation Bar End-->
+			<div class="gnbWrap">
+				<div id="menuArea">
+					<ul id="navi">
+						<li id="menu" class="selectMenu"><a href="#">사용자관리</a></li>
+						<li id="menu"><a href="#">포탈관리</a></li>
+						<li id="menu"><a href="#">게시판관리</a></li>
+						<li id="menu"><a href="#">설문관리</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--header_centerBox End-->
+	</div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>주말대표</title>
+<link rel="stylesheet" th:href="@{/css/basic/admin/common.css}"/>
+<link rel="stylesheet" th:href="@{/css/basic/admin/worksite.css}"/>
+<script th:src="@{/js/basic/jquery-3.6.1.min.js}"></script>
+<script th:src="@{/js/basic/common.js}"></script>
+<script th:src="@{/js/basic/validation.js}"></script>
+</head>
+<body>
+	<header th:replace="fragment/header :: headerFragment"></header>
+	<!--header End-->
+	<div class="wrap">
+		<div class="container">
+			<th:block th:replace="fragment/leftMenu :: leftMenuFragment"></th:block>
+			<div class="contents">
+				<p class="contentTitle">사용자 관리</p>
+				<p class="sub_path">
+					<img th:src="@{/images/ico_home.png}" width="10" height="9" />&nbsp;〉&nbsp;사용자관리&nbsp;〉&nbsp;사용자관리
+				</p>
+				<form th:action="@{/usermng/r/m/selectUserList.do}" method="post" name="userVO" id="userVO">
+					<input type="hidden" name="page" id="page" th:value="${selectUserList.pageable.pageNumber}">
+					<input type="hidden" name="sortSubject" th:value="${userVO.sortSubject}">
+					<input type="hidden" name="sortDescend" th:value="${userVO.sortDescend}">
+					<input type="hidden" name="userId">
+					<div class="selectBox">
+						<!-- <select class="w13p" name="searchCondition" id="searchCondition">
+							<option th:selected="${userVO.searchCondition eq 'userNm'}" th:value="userNm" th:text="이름"></option>
+							<option th:selected="${userVO.searchCondition eq 'userId'}" th:value="userId" th:text="아이디"></option>
+							<option th:selected="${userVO.searchCondition eq 'emailAddr'}" th:value="emailAddr" th:text="이메일"></option>
+						</select> -->
+						<input class="searchName" name="searchKeyword" id="searchKeyword" type="text" th:value="${userVO.searchKeyword}"/>
+						<button type="button" class="grayBtn ico" onclick="javascript:fn_searchList(1);"><img th:src="@{/images/ico_search.png}"> 검색</button>
+					</div>
+				</form>
+				<div class="tableLayer">
+					<table class="tableList">
+						<caption></caption>
+						<colgroup>
+							<col width="5%">
+							<col width="20%">
+							<col width="25%">
+							<col width="20%">
+							<col width="20%">
+						</colgroup>
+						<thead>
+							<th class="noBg">아이디</th>
+							<th sortId="userNm">성명
+								<span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
+								<span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
+							</th>
+							<th>휴대폰번호</th>
+							<th sortId="emailAddr">이메일
+								<span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
+								<span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
+							</th>
+							<th sortId="regDt">가입일자
+								<span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
+								<span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
+							</th>
+						</thead>
+						<tbody>
+							<tr th:if="${#lists.size(rslt.resultList)} > 0" th:each="list : ${rslt.resultList}" 
+								th:onclick="fn_selectUserDetail([[${list.userId}]]);"  style="cursor: pointer;" class="row">
+								<td th:text="${list.userId}"></td>
+								<td th:text="${list.name}"></td>
+								<td th:text="${#strings.defaultString(list.phoneNumber,'-')}"></td>
+								<td th:text="${list.email}"></td>
+								<td th:text="${#temporals.format(list.regDt, 'yyyy-MM-dd')}"></td>
+							</tr>
+							<tr th:unless="${#lists.size(rslt.resultList)} > 0" class="row">
+								<td colspan="8">데이터가 없습니다.</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="T_btnLayer fr">
+						<a href="javascript:void(0);" onclick="javascript:fn_insertUser();"><button type="button" class="blueBtn L">등록</button></a>
+					</div>
+				</div>
+				<!--페이징-->
+				<!-- <div class="paging_place">
+					<div class="paging_wrap" th:with="start=${T(Math).floor(selectUserList.number/10)*10 + 1}, last=(${start + 9 < selectUserList.totalPages ? start + 9 : selectUserList.totalPages})">
+						<a th:style="${selectUserList.first} ? 'display:none'" th:href="@{/usermng/r/m/selectUserList.do?page=1}" title="맨 앞으로" class="pprev"></a>
+						<a th:style="${selectUserList.first} ? 'display:none'" th:href="@{/usermng/r/m/selectUserList.do(page=${selectUserList.number})}" title="이전" class="prev"></a>
+						<span>
+							<a th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == selectUserList.number + 1} ? 'active'" th:text="${page}" th:href="@{/usermng/r/m/selectUserList.do(page=${page})}">1</a>
+						</span>
+						<a th:style="${selectUserList.last} ? 'display:none'" th:href="@{/usermng/r/m/selectUserList.do(page=${selectUserList.number + 2})}" title="다음" class="next"></a>
+						<a th:style="${selectUserList.last} ? 'display:none'" th:href="@{/usermng/r/m/selectUserList.do(page=${selectUserList.totalPages})}" title="맨 뒤로" class="nnext"></a>
+					</div>
+				</div> -->
+			</div>
+		</div>
+		<!--container End-->
+	</div>
+	<!--wrap End-->
+	<footer th:replace="fragment/footer :: footerFragment"></footer>
+	<!--//footer-->
+	<script th:inline="javascript">
+	//검색
+	var fn_searchList = function(pageNo) {
+		var frm = document.userVO;
+		frm.page = pageNo;
+		frm.submit();
+	};
+	
+	//정렬
+	var fn_sort = function(obj) {
+		var frm = document.userVO;
+		frm.sortDescend.value = obj.className == "arrow_ascending" ? "asc" : "desc";
+		frm.sortSubject.value = obj.parentNode.getAttributeNode("sortId").value;
+		frm.submit();
+	};
+	
+	//상세보기
+	var fn_selectUserDetail = function(userId) {
+		var url = /*[[@{/usermng/r/m/selectUserDetail.do}]]*/;
+		var frm = document.userVO;
+		frm.userId.value = userId;
+		frm.action = url;
+		frm.submit();
+	}
+	
+	//사용자 등록
+	var fn_insertUser = function() {
+		var frm = document.userVO;
+		frm.action = /*[[@{/usermng/r/m/insertUser.do}]]*/;
+		frm.submit();
+	};
+	</script>
+</body>
+</html>

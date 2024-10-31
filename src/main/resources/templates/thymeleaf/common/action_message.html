@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>basic</title>
+<script type="text/javascript" th:src="@{/js/basic/jquery-3.6.1.min.js}"></script>
+</head>
+<body>
+<script th:inline="javascript" th:with="resultMsg=${#strings.unescapeJavaScript(message)}">
+	alert(/*[[${resultMsg}]]*/);
+	window.location.href = /*[[${redirectUrl}]]*/;
+</script>
+</body>
+</html>

@@ -1,19 +1,41 @@
 package com.basic.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
 @Configuration
 public class EgovConfigDatasource {
 
-	@Bean(name="dataSource")
+	@Value("${basic.datasource.url}")
+	private String url;
+
+	@Value("${basic.datasource.username}")
+	private String username;
+
+	@Value("${basic.datasource.password}")
+	private String password;
+
+	@Value("${basic.datasource.driver-class-name}")
+	private String driverClassName;
+
+//	@Bean(name = "dataSource")
+//	public DataSource dataSource() {
+//		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+//		return builder.setType(EmbeddedDatabaseType.HSQL).addScript("classpath:/db/sampledb.sql").build();
+//	}
+
+	@Bean
 	public DataSource dataSource() {
-	    EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-	    return builder.setType(EmbeddedDatabaseType.HSQL).addScript("classpath:/db/sampledb.sql").build();
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setUrl(url);
+		dataSource.setUsername(username);
+		dataSource.setPassword(password);
+		dataSource.setDriverClassName(driverClassName);
+		return dataSource;
 	}
 
 }
