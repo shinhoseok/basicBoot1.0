@@ -1,15 +1,17 @@
 package com.basic.common.service;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@SuppressWarnings("serial")
 @Getter
 @Setter
 @NoArgsConstructor
-public class CommDefaultVO {
+public class CommDefaultVO implements Serializable {
 	/** 검색조건 */
 	private String searchCondition = "";
 	/** 검색Keyword */
@@ -20,24 +22,24 @@ public class CommDefaultVO {
 	private String sortDescend = "";
 	/** 현재페이지 */
 	private int pageIndex = 1;
-	/** 페이지갯수 */
+	/** 한페이지에 보여줄 로우 */
 	private int pageUnit = 10;
-	/** 페이지사이즈 */
+	/** 페이지리스트에 게시되는 페이지건수 */
 	private int pageSize = 10;
 	/** firstIndex */
 	private int firstIndex = 1;
 	/** lastIndex */
 	private int lastIndex = 1;
-	/** recordCountPerPage */
+	/** 한페이지당 게시되는 게시물 건수 */
 	private int recordCountPerPage = 10;
 	/** 등록아이디 */
 	private String regId;
 	/** 등록일 */
-	private LocalDateTime regDt;
+	private String regDt;
 	/** 수정아이디 */
 	private String modId;
 	/** 수정일 */
-	private LocalDateTime modDt;
+	private String modDt;
 	/** 삭제여부 */
 	private String delYn;
 }

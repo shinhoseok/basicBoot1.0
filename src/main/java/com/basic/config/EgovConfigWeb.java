@@ -17,6 +17,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import com.basic.pagination.BasicPaginationDialect;
 import com.basic.pagination.EgovPaginationDialect;
 
 import java.util.List;
@@ -58,7 +59,8 @@ public class EgovConfigWeb implements WebMvcConfigurer, ApplicationContextAware 
 		templateEngine.setTemplateResolver(templateResolver());
 		templateEngine.setEnableSpringELCompiler(true);
 		// add custom tag
-		templateEngine.addDialect(new EgovPaginationDialect());
+//		templateEngine.addDialect(new EgovPaginationDialect());
+		templateEngine.addDialect(new BasicPaginationDialect());
 		return templateEngine;
 	}
 

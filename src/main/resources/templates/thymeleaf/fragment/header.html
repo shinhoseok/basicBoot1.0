@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>Header Example</title>
-<!-- 필요한 CSS, JS 파일 링크 추가 -->
-</head>
-<body>
 	<div class="header" th:fragment="headerFragment">
 		<div class="header_centerBox">
 			<h1>
-				<img th:src="@{/images/logo.png}" width="143" height="19" />
+				<img th:src="@{/images/basic/admin/logo.png}" width="143" height="19" />
 			</h1>
 			<div class="lnb">
 				<dl>
@@ -18,13 +13,13 @@
 						<a href="#" class="lbtn">로그아웃</a>
 					</dd>
 					<dd class="lbar">
-						<img th:src="@{/images/lnb_bar.gif}" width="1" height="10" />
+						<img th:src="@{/images/basic/admin/lnb_bar.gif}" width="1" height="10" />
 					</dd>
 					<dd>
 						<a href="#">사이트맵</a>
 					</dd>
 					<dd class="lbar">
-						<img th:src="@{/images/lnb_bar.gif}" width="1" height="10" />
+						<img th:src="@{/images/basic/admin/lnb_bar.gif}" width="1" height="10" />
 					</dd>
 					<dd>
 						<a href="#">설정</a>
@@ -45,5 +40,4 @@
 		</div>
 		<!--header_centerBox End-->
 	</div>
-</body>
 </html>

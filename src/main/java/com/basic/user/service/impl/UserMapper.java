@@ -13,5 +13,5 @@ import com.basic.user.service.UserVO;
 public interface UserMapper extends UserDAO {
 	List<UserVO> findUserList(UserVO userVO);
 	
-	Integer findUserListCnt(UserVO userVO);
+	Integer findUserListCnt(UserVO userVO) ;
 }

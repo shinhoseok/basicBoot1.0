@@ -71,7 +71,7 @@
 				       name,
 				       phone_number phoneNumber,
 				       email,
-				       reg_dt regDt
+				       TO_CHAR(reg_dt, 'yyyy-mm-dd') regDt
 		          FROM USERS
 		]]>
 		<include refid="findUserListWhere"/>

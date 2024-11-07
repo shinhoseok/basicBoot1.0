@@ -11,29 +11,29 @@
 <script th:src="@{/js/basic/validation.js}"></script>
 </head>
 <body>
-	<header th:replace="fragment/header :: headerFragment"></header>
+	<header th:insert="fragment/header :: headerFragment"></header>
 	<!--header End-->
 	<div class="wrap">
 		<div class="container">
-			<th:block th:replace="fragment/leftMenu :: leftMenuFragment"></th:block>
+			<th:block th:insert="fragment/leftMenu :: leftMenuFragment"></th:block>
 			<div class="contents">
 				<p class="contentTitle">사용자 관리</p>
 				<p class="sub_path">
-					<img th:src="@{/images/ico_home.png}" width="10" height="9" />&nbsp;〉&nbsp;사용자관리&nbsp;〉&nbsp;사용자관리
+					<img th:src="@{/images/basic/admin/ico_home.png}" width="10" height="9" />&nbsp;〉&nbsp;사용자관리&nbsp;〉&nbsp;사용자관리
 				</p>
 				<form th:action="@{/usermng/r/m/selectUserList.do}" method="post" name="userVO" id="userVO">
-					<input type="hidden" name="page" id="page" th:value="${selectUserList.pageable.pageNumber}">
+					<input type="hidden" name="pageIndex" id="page" th:value="${userVO.pageIndex}">
 					<input type="hidden" name="sortSubject" th:value="${userVO.sortSubject}">
 					<input type="hidden" name="sortDescend" th:value="${userVO.sortDescend}">
 					<input type="hidden" name="userId">
 					<div class="selectBox">
-						<!-- <select class="w13p" name="searchCondition" id="searchCondition">
+						<select class="w13p" name="searchCondition" id="searchCondition">
 							<option th:selected="${userVO.searchCondition eq 'userNm'}" th:value="userNm" th:text="이름"></option>
 							<option th:selected="${userVO.searchCondition eq 'userId'}" th:value="userId" th:text="아이디"></option>
 							<option th:selected="${userVO.searchCondition eq 'emailAddr'}" th:value="emailAddr" th:text="이메일"></option>
-						</select> -->
+						</select>
 						<input class="searchName" name="searchKeyword" id="searchKeyword" type="text" th:value="${userVO.searchKeyword}"/>
-						<button type="button" class="grayBtn ico" onclick="javascript:fn_searchList(1);"><img th:src="@{/images/ico_search.png}"> 검색</button>
+						<button type="button" class="grayBtn ico" onclick="javascript:fn_searchList(1);"><img th:src="@{/images/basic/admin/ico_search.png}"> 검색</button>
 					</div>
 				</form>
 				<div class="tableLayer">
@@ -67,9 +67,9 @@
 								th:onclick="fn_selectUserDetail([[${list.userId}]]);"  style="cursor: pointer;" class="row">
 								<td th:text="${list.userId}"></td>
 								<td th:text="${list.name}"></td>
-								<td th:text="${#strings.defaultString(list.phoneNumber,'-')}"></td>
+								<td th:text="${list.phoneNumber}"></td>
 								<td th:text="${list.email}"></td>
-								<td th:text="${#temporals.format(list.regDt, 'yyyy-MM-dd')}"></td>
+								<td th:text="${list.regDt}"></td>
 							</tr>
 							<tr th:unless="${#lists.size(rslt.resultList)} > 0" class="row">
 								<td colspan="8">데이터가 없습니다.</td>
@@ -81,52 +81,48 @@
 					</div>
 				</div>
 				<!--페이징-->
-				<!-- <div class="paging_place">
-					<div class="paging_wrap" th:with="start=${T(Math).floor(selectUserList.number/10)*10 + 1}, last=(${start + 9 < selectUserList.totalPages ? start + 9 : selectUserList.totalPages})">
-						<a th:style="${selectUserList.first} ? 'display:none'" th:href="@{/usermng/r/m/selectUserList.do?page=1}" title="맨 앞으로" class="pprev"></a>
-						<a th:style="${selectUserList.first} ? 'display:none'" th:href="@{/usermng/r/m/selectUserList.do(page=${selectUserList.number})}" title="이전" class="prev"></a>
-						<span>
-							<a th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == selectUserList.number + 1} ? 'active'" th:text="${page}" th:href="@{/usermng/r/m/selectUserList.do(page=${page})}">1</a>
-						</span>
-						<a th:style="${selectUserList.last} ? 'display:none'" th:href="@{/usermng/r/m/selectUserList.do(page=${selectUserList.number + 2})}" title="다음" class="next"></a>
-						<a th:style="${selectUserList.last} ? 'display:none'" th:href="@{/usermng/r/m/selectUserList.do(page=${selectUserList.totalPages})}" title="맨 뒤로" class="nnext"></a>
-					</div>
-				</div> -->
+				<div class="paging_place">
+                    <div class="paging_wrap">
+                    	<span th:utext="${#basicPaginationFormat.paginationFormat(rslt.paginationInfo, 'fn_searchList')}"></span>
+                    </div>
+                </div>
 			</div>
 		</div>
 		<!--container End-->
 	</div>
 	<!--wrap End-->
-	<footer th:replace="fragment/footer :: footerFragment"></footer>
+	<footer th:insert="fragment/footer :: footerFragment"></footer>
 	<!--//footer-->
 	<script th:inline="javascript">
+	let pageNum = 1;
 	//검색
-	var fn_searchList = function(pageNo) {
-		var frm = document.userVO;
-		frm.page = pageNo;
+	const fn_searchList = function(pageNo) {
+		let frm = document.userVO;
+		alert(pageNo);
+		frm.pageIndex = pageNum;
 		frm.submit();
 	};
 	
 	//정렬
-	var fn_sort = function(obj) {
-		var frm = document.userVO;
+	const fn_sort = function(obj) {
+		let frm = document.userVO;
 		frm.sortDescend.value = obj.className == "arrow_ascending" ? "asc" : "desc";
 		frm.sortSubject.value = obj.parentNode.getAttributeNode("sortId").value;
 		frm.submit();
 	};
 	
 	//상세보기
-	var fn_selectUserDetail = function(userId) {
-		var url = /*[[@{/usermng/r/m/selectUserDetail.do}]]*/;
-		var frm = document.userVO;
+	const fn_selectUserDetail = function(userId) {
+		let url = /*[[@{/usermng/r/m/selectUserDetail.do}]]*/;
+		let frm = document.userVO;
 		frm.userId.value = userId;
 		frm.action = url;
 		frm.submit();
 	}
 	
 	//사용자 등록
-	var fn_insertUser = function() {
-		var frm = document.userVO;
+	const fn_insertUser = function() {
+		let frm = document.userVO;
 		frm.action = /*[[@{/usermng/r/m/insertUser.do}]]*/;
 		frm.submit();
 	};
