@@ -6,7 +6,7 @@
 		<where>
 			<if test="searchKeyword != null and searchKeyword != ''">
 				<choose>
-					<when test="searchCondition == 'usrNm'">
+					<when test="searchCondition == 'userNm'">
 						AND NAME LIKE '%'|| #{searchKeyword} ||'%'
 					</when>
 					<otherwise>
@@ -51,6 +51,9 @@
 			</when>
 			<when test="sortSubject == 'name'">
 				ORDER BY name
+			</when>
+			<when test="sortSubject == 'email'">
+				ORDER BY email
 			</when>
 			<otherwise>
 				ORDER BY user_id

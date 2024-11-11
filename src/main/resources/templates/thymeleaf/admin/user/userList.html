@@ -4,111 +4,114 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <title>주말대표</title>
-<link rel="stylesheet" th:href="@{/css/basic/admin/common.css}"/>
-<link rel="stylesheet" th:href="@{/css/basic/admin/worksite.css}"/>
-<script th:src="@{/js/basic/jquery-3.6.1.min.js}"></script>
-<script th:src="@{/js/basic/common.js}"></script>
-<script th:src="@{/js/basic/validation.js}"></script>
+<link rel="stylesheet" th:href="@{/admin/css/common.css}" />
+<link rel="stylesheet" th:href="@{/admin/css/worksite.css}" />
+<script th:src="@{/admin/js/jquery-3.6.1.min.js}"></script>
+<script th:src="@{/admin/js/common.js}"></script>
+<script th:src="@{/admin/js/validation.js}"></script>
 </head>
 <body>
-	<header th:insert="fragment/header :: headerFragment"></header>
-	<!--header End-->
-	<div class="wrap">
-		<div class="container">
-			<th:block th:insert="fragment/leftMenu :: leftMenuFragment"></th:block>
-			<div class="contents">
-				<p class="contentTitle">사용자 관리</p>
-				<p class="sub_path">
-					<img th:src="@{/images/basic/admin/ico_home.png}" width="10" height="9" />&nbsp;〉&nbsp;사용자관리&nbsp;〉&nbsp;사용자관리
-				</p>
-				<form th:action="@{/usermng/r/m/selectUserList.do}" method="post" name="userVO" id="userVO">
-					<input type="hidden" name="pageIndex" id="page" th:value="${userVO.pageIndex}">
-					<input type="hidden" name="sortSubject" th:value="${userVO.sortSubject}">
-					<input type="hidden" name="sortDescend" th:value="${userVO.sortDescend}">
-					<input type="hidden" name="userId">
+	<div id="target">
+		<header th:insert="fragment/header :: headerFragment"></header>
+		<!--header End-->
+		<div class="wrap">
+			<div class="container">
+				<th:block th:insert="fragment/leftMenu :: leftMenuFragment"></th:block>
+				<div class="contents">
+					<p class="contentTitle">사용자 관리</p>
+					<p class="sub_path">
+						<img th:src="@{/admin/images/ico_home.png}" width="10" height="9" />&nbsp;〉&nbsp;사용자관리&nbsp;〉&nbsp;사용자관리
+					</p>
 					<div class="selectBox">
 						<select class="w13p" name="searchCondition" id="searchCondition">
 							<option th:selected="${userVO.searchCondition eq 'userNm'}" th:value="userNm" th:text="이름"></option>
-							<option th:selected="${userVO.searchCondition eq 'userId'}" th:value="userId" th:text="아이디"></option>
 							<option th:selected="${userVO.searchCondition eq 'emailAddr'}" th:value="emailAddr" th:text="이메일"></option>
 						</select>
-						<input class="searchName" name="searchKeyword" id="searchKeyword" type="text" th:value="${userVO.searchKeyword}"/>
-						<button type="button" class="grayBtn ico" onclick="javascript:fn_searchList(1);"><img th:src="@{/images/basic/admin/ico_search.png}"> 검색</button>
+						<input class="searchName" name="searchKeyword" id="searchKeyword" onkeydown="if(event.keyCode==13){javascript:fn_searchList(1);}"  type="text" th:value="${userVO.searchKeyword}" />
+						<button type="button" class="grayBtn ico" onclick="javascript:fn_searchList(1);">
+							<img th:src="@{/admin/images/ico_search.png}"> 검색
+						</button>
 					</div>
-				</form>
-				<div class="tableLayer">
-					<table class="tableList">
-						<caption></caption>
-						<colgroup>
-							<col width="5%">
-							<col width="20%">
-							<col width="25%">
-							<col width="20%">
-							<col width="20%">
-						</colgroup>
-						<thead>
-							<th class="noBg">아이디</th>
-							<th sortId="userNm">성명
-								<span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
-								<span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
-							</th>
-							<th>휴대폰번호</th>
-							<th sortId="emailAddr">이메일
-								<span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
-								<span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
-							</th>
-							<th sortId="regDt">가입일자
-								<span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
-								<span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
-							</th>
-						</thead>
-						<tbody>
-							<tr th:if="${#lists.size(rslt.resultList)} > 0" th:each="list : ${rslt.resultList}" 
-								th:onclick="fn_selectUserDetail([[${list.userId}]]);"  style="cursor: pointer;" class="row">
-								<td th:text="${list.userId}"></td>
-								<td th:text="${list.name}"></td>
-								<td th:text="${list.phoneNumber}"></td>
-								<td th:text="${list.email}"></td>
-								<td th:text="${list.regDt}"></td>
-							</tr>
-							<tr th:unless="${#lists.size(rslt.resultList)} > 0" class="row">
-								<td colspan="8">데이터가 없습니다.</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="T_btnLayer fr">
-						<a href="javascript:void(0);" onclick="javascript:fn_insertUser();"><button type="button" class="blueBtn L">등록</button></a>
+					<div class="tableLayer">
+						<table class="tableList">
+							<caption></caption>
+							<colgroup>
+								<col width="5%">
+								<col width="20%">
+								<col width="25%">
+								<col width="20%">
+								<col width="20%">
+							</colgroup>
+							<thead>
+								<th class="noBg">아이디</th>
+								<th sortId="name">성명 <span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span> <span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
+								</th>
+								<th>휴대폰번호</th>
+								<th sortId="email">이메일 <span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span> <span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
+								</th>
+								<th sortId="regDt">가입일자 <span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span> <span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
+								</th>
+							</thead>
+							<tbody>
+								<tr th:if="${rslt.resultListCnt} > 0" th:each="list : ${rslt.resultList}" th:onclick="fn_selectUserDetail([[${list.userId}]]);" style="cursor: pointer;" class="row">
+									<td th:text="${list.userId}"></td>
+									<td th:text="${list.name}"></td>
+									<td th:text="${list.phoneNumber}"></td>
+									<td th:text="${list.email}"></td>
+									<td th:text="${list.regDt}"></td>
+								</tr>
+								<tr th:unless="${rslt.resultListCnt} > 0" class="row">
+									<td colspan="8">데이터가 없습니다.</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="T_btnLayer fr">
+							<a href="javascript:void(0);" onclick="javascript:fn_insertUser();"><button type="button" class="blueBtn L">등록</button></a>
+						</div>
+					</div>
+					<!--페이징-->
+					<div class="paging_place">
+						<div class="paging_wrap" th:utext="${#basicPaginationFormat.paginationFormat(rslt.paginationInfo, 'fn_searchList')}"></div>
 					</div>
 				</div>
-				<!--페이징-->
-				<div class="paging_place">
-                    <div class="paging_wrap">
-                    	<span th:utext="${#basicPaginationFormat.paginationFormat(rslt.paginationInfo, 'fn_searchList')}"></span>
-                    </div>
-                </div>
 			</div>
+			<!--container End-->
 		</div>
-		<!--container End-->
+		<!--wrap End-->
+		<footer th:insert="fragment/footer :: footerFragment"></footer>
+		<!--//footer-->
 	</div>
-	<!--wrap End-->
-	<footer th:insert="fragment/footer :: footerFragment"></footer>
-	<!--//footer-->
 	<script th:inline="javascript">
-	let pageNum = 1;
+	//백엔드 넘길 데이터 
+	let params = {};
+	
 	//검색
 	const fn_searchList = function(pageNo) {
-		let frm = document.userVO;
-		alert(pageNo);
-		frm.pageIndex = pageNum;
-		frm.submit();
+		params.pageIndex = pageNo;
+		params.searchKeyword = $("#searchKeyword").val();
+		params.searchCondition = $("#searchCondition").val();
+		fn_searchListAjax(params);
 	};
+	
+	
+	//ajax 전송 
+	const fn_searchListAjax = function(params) {
+		$.ajax({
+            url: '/user/list',
+            type: 'get',
+            dataType :'html',
+            data: params,
+        }).done(function(r) {
+        	$('#target').html(r);
+        });
+	};
+	
 	
 	//정렬
 	const fn_sort = function(obj) {
-		let frm = document.userVO;
-		frm.sortDescend.value = obj.className == "arrow_ascending" ? "asc" : "desc";
-		frm.sortSubject.value = obj.parentNode.getAttributeNode("sortId").value;
-		frm.submit();
+		params.sortDescend = obj.className == "arrow_ascending" ? "asc" : "desc";
+		params.sortSubject = obj.parentNode.getAttributeNode("sortId").value;
+		fn_searchListAjax(params);
 	};
 	
 	//상세보기

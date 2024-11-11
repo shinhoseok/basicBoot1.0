@@ -61,6 +61,7 @@ public class UserServiceImpl extends EgovAbstractServiceImpl implements UserServ
 			resultList = userDAO.findUserList(userVO);
 		}
 		rsltMap.put("resultList", resultList);
+		rsltMap.put("resultListCnt", cnt);
 		rsltMap.put("paginationInfo", paginationInfo);
 		
 		return rsltMap;

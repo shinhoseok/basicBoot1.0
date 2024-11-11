@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
 
@@ -21,21 +23,23 @@ public class EgovConfigDatasource {
 
 	@Value("${basic.datasource.driver-class-name}")
 	private String driverClassName;
+	
+	@Value("${spring.profiles.active}")
+	private String profile;
 
-//	@Bean(name = "dataSource")
-//	public DataSource dataSource() {
-//		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-//		return builder.setType(EmbeddedDatabaseType.HSQL).addScript("classpath:/db/sampledb.sql").build();
-//	}
-
-	@Bean
+	@Bean(name = "dataSource")
 	public DataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setUrl(url);
-		dataSource.setUsername(username);
-		dataSource.setPassword(password);
-		dataSource.setDriverClassName(driverClassName);
-		return dataSource;
+		if(profile.equals("local")) {
+			EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+			return builder.setType(EmbeddedDatabaseType.HSQL).addScript("classpath:/db/sampledb.sql").build();
+		} else {
+			DriverManagerDataSource dataSource = new DriverManagerDataSource();
+			dataSource.setUrl(url);
+			dataSource.setUsername(username);
+			dataSource.setPassword(password);
+			dataSource.setDriverClassName(driverClassName);
+			return dataSource;
+		}
 	}
 
 }

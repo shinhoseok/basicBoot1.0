@@ -59,7 +59,7 @@ public class EgovConfigWeb implements WebMvcConfigurer, ApplicationContextAware 
 		templateEngine.setTemplateResolver(templateResolver());
 		templateEngine.setEnableSpringELCompiler(true);
 		// add custom tag
-//		templateEngine.addDialect(new EgovPaginationDialect());
+		templateEngine.addDialect(new EgovPaginationDialect());
 		templateEngine.addDialect(new BasicPaginationDialect());
 		return templateEngine;
 	}

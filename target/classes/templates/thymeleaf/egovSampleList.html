@@ -46,6 +46,7 @@
                     pageIndex: pageIndex
                 }
             }).done(function(fragment) {
+            	console.log(fragment);
                 $('#content_pop').replaceWith(fragment);
             });
         }
