@@ -40,7 +40,7 @@ config.properties
 .buildpath
 
 # sbteclipse plugin
-.target
+#.target
 
 # Tern plugin
 .tern-project

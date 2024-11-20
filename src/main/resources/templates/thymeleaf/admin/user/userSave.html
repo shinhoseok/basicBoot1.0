@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments/commonMeta.html :: meta"></th:block>
+<title>주말대표</title>
+<link rel="stylesheet" th:href="@{/css/common.css}"/>
+<link rel="stylesheet" th:href="@{/css/worksite.css}"/>
+<script th:src="@{/js/jquery/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/validation.js}"></script>
+</head>
+<body>
+	<header th:replace="fragment/header :: headerFragment"></header>
+	<!--header End-->
+	<div class="wrap">
+		<div class="container">
+			<th:block th:replace="fragment/leftMenu :: leftMenuFragment"></th:block>
+			<div class="contents">
+				<p class="contentTitle">사용자 등록</p>
+				<p class="sub_path">
+					<img th:src="@{/images/ico_home.png}" width="10" height="9" />&nbsp;〉&nbsp;사용자관리&nbsp;〉&nbsp;사용자관리
+				</p>
+				<h4 class="contentTitle_h4">사용자 정보</h4>
+				<form th:action="@{/usermng/r/m/insertUserProc.do}" method="post" name="userVO" id="userVO">
+					<input type="hidden" name="page" id="page" th:value="${userVO.page + 1}">
+					<input type="hidden" name="sortSubject" th:value="${userVO.sortSubject}">
+					<input type="hidden" name="sortDescend" th:value="${userVO.sortDescend}">
+					<div class="tableLayer">
+						<table class="table">
+							<caption></caption>
+							<colgroup>
+								<col width="150px">
+								<col width="340px">
+								<col width="150px">
+								<col width="340px">
+							</colgroup>
+							<tbody class="line">
+								<tr>
+									<th class="bullet_orange">E-mail</th>
+									<td>
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<input id="emailAddr" name="emailAddr" style="width: 240px;" type="text" onfocus="checker(this, 100, 'nbytes_emailAddr');" onblur="stopchecker();">
+											&nbsp;[<span id="nbytes_emailAddr" class="color_red">0</span>/100]byte
+										</div>
+									</td>
+									<th class="bullet_orange">이름</th>
+									<td>
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<input id="userNm" name="userNm" style="width: 240px;" type="text" onfocus="checker(this, 100, 'nbytes_userNm');" onblur="stopchecker();">
+											&nbsp;[<span id="nbytes_userNm" class="color_red">0</span>/100]byte
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th class="bullet_orange">비밀번호</th>
+									<td>
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<input id="userPw" name="userPw" style="width: 240px; height: 28px; border: 1px solid #D4D4D4;" type="password" onfocus="checker(this, 100, 'nbytes_userPw');" onblur="stopchecker();">
+											&nbsp;[<span id="nbytes_userPw" class="color_red">0</span>/100]byte
+										</div>
+									</td>
+									<th class="bullet_orange">비밀번호 확인</th>
+									<td>
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<input id="userPwConfirm" style="width: 240px; height: 28px; border: 1px solid #D4D4D4;" type="password" onfocus="checker(this, 100, 'nbytes_userPwConfirm');" onblur="stopchecker();">
+											&nbsp;[<span id="nbytes_userPwConfirm" class="color_red">0</span>/100]byte
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>휴대폰</th>
+									<td>
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<input id="mblPno" name="mblPno" style="width: 240px;" type="text" onfocus="checker(this, 50, 'nbytes_mblPno');" onblur="stopchecker();">
+											&nbsp;[<span id="nbytes_mblPno" class="color_red">0</span>/50]byte
+										</div>
+									</td>
+									<th>전화번호</th>
+									<td>
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<input id="pno" name="pno" style="width: 240px;" type="text" onfocus="checker(this, 50, 'nbytes_pno');" onblur="stopchecker();">
+											&nbsp;[<span id="nbytes_pno" class="color_red">0</span>/50]byte
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>우편번호</th>
+									<td>
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<input id="zipNo" name="zipNo" style="width: 240px;" type="text" onfocus="checker(this, 5, 'nbytes_zipNo');" onblur="stopchecker();">
+											&nbsp;[<span id="nbytes_zipNo" class="color_red">0</span>/5]byte
+										</div>
+									</td>
+									<th>주소</th>
+									<td>
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<input id="addr" name="addr" style="width: 240px;" type="text" onfocus="checker(this, 300, 'nbytes_addr');" onblur="stopchecker();">
+											&nbsp;[<span id="nbytes_addr" class="color_red">0</span>/300]byte
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</form>
+				<div class="T_btnLayer fr">
+					<a href="javascript:void(0);" onclick="fn_insertUserProc();"><button type="button" class="blueBtn L">등록</button></a>
+					<a href="javascript:void(0);" onclick="fn_selectUserList();"><button type="button" class="blueBtn L">취소</button></a>
+				</div>
+			</div>
+		</div>
+		<!--container End-->
+	</div>
+	<!--wrap End-->
+	<footer th:replace="fragment/footer :: footerFragment"></footer>
+	<!--//footer-->
+<script th:inline="javascript">
+	var fn_insertUserProc = function() {
+		if(!TypeChecker.required($("#userVO #emailAddr").val())) {
+			alert("'이메일'은 " + TypeChecker.requiredText);
+			$("#userVO #emailAddr").focus();
+			return;
+		}
+		if(!TypeChecker.email($("#userVO #emailAddr").val())) {
+			alert("'이메일'은 " + TypeChecker.emailText);
+			$("#userVO #emailAddr").focus();
+			return;
+		}
+		if(!TypeChecker.number($("#userVO #mblPno").val())) {
+			alert("'휴대폰 번호'는 " + TypeChecker.numberText);
+			$("#userVO #mblPno").focus();
+			return;
+		}
+		if(!TypeChecker.required($("#userVO #userPw").val())) {
+			alert("'비밀번호'는 " + TypeChecker.requiredText);
+			$("#userVO #userPw").focus();
+			return;
+		}
+		if(!fn_checkPass("userPw")) {
+			return;
+		}
+		if(!TypeChecker.required($("#userVO #userPwConfirm").val())) {
+			alert("'비밀번호 확인'은 " + TypeChecker.requiredText);
+			$("#userVO #userPwConfirm").focus();
+			return;
+		}
+		if(!fn_checkPass("userPwConfirm")) {
+			return;
+		}
+		if($("#userVO #userPw").val() != $("#userVO #userPwConfirm").val()) {
+			alert("패스워드가 일치하지 않습니다");
+			$("#userVO #userPw").focus();
+			return;
+		}
+		if(!TypeChecker.number($("#userVO #zipNo").val())) {
+			alert("'우편번호'는 " + TypeChecker.numberText);
+			$("#userVO #zipNo").focus();
+			return;
+		}
+		if(!TypeChecker.number($("#userVO #pno").val())) {
+			alert("'전화번호'는 " + TypeChecker.numberText);
+			$("#userVO #pno").focus();
+			return;
+		}
+		//중복체크
+		$.ajax({
+			url : /*[[@{/usermng/r/m/selectEmailAddrChk.do}]]*/,
+			type : "post",
+			dataType : "json",
+			data : $("#userVO").serialize(),
+			error : function() {
+				alert("아이디 중복체크 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.");
+				return;
+			},
+			success : function(r) {
+				if(r.resultCnt == 0) {
+					document.userVO.submit();
+				} else {
+					alert("사용자 이메일이 중복되었습니다.\n다른값으로 입력바랍니다.");
+					$("#userVO #emailAddr").focus();
+					return;
+				}
+			}
+		});
+	};
+	
+	//사용자 목록
+	var fn_selectUserList = function() {
+		var frm = document.userVO;
+		frm.action = /*[[@{/usermng/r/m/selectUserList.do}]]*/;
+		frm.submit();
+	};
+</script>
+</body>
+</html>
