@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -31,7 +32,8 @@ import java.util.Properties;
 		EgovConfigIdGeneration.class,
 		EgovConfigMapper.class,
 		EgovConfigProperties.class,
-		EgovConfigTransaction.class,
+//		EgovConfigTransaction.class,
+		JpaTransactionManager.class,
 		EgovConfigValidation.class
 })
 public class EgovConfigWeb implements WebMvcConfigurer, ApplicationContextAware {

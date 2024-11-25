@@ -6,7 +6,7 @@
 		<typeAlias alias="egovMap" type="org.egovframe.rte.psl.dataaccess.util.EgovMap"/>
 		<typeAlias alias="searchVO" type="com.basic.sample.service.SampleDefaultVO"/>
 		<typeAlias alias="sampleVO" type="com.basic.sample.service.SampleVO"/>
-		<typeAlias alias="userVO" type="com.basic.user.service.UserVO"/>
+		<typeAlias alias="userDTO" type="com.basic.dto.UserDTO"/>
     </typeAliases>
     <!-- <mappers>
         <mapper resource="com/basic/user/service/UserMapper.xml"/> XML 파일 경로

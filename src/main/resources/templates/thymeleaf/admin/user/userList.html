@@ -25,10 +25,10 @@
 					<form name="userForm" id="userForm" method="post">
 						<div class="selectBox">
 							<select class="w13p" name="searchCondition" id="searchCondition">
-								<option th:selected="${userVO.searchCondition eq 'userNm'}" th:value="userNm" th:text="이름"></option>
-								<option th:selected="${userVO.searchCondition eq 'emailAddr'}" th:value="emailAddr" th:text="이메일"></option>
+								<option th:selected="${userDTO.searchCondition eq 'userNm'}" th:value="userNm" th:text="이름"></option>
+								<option th:selected="${userDTO.searchCondition eq 'emailAddr'}" th:value="emailAddr" th:text="이메일"></option>
 							</select>
-							<input class="searchName" name="searchKeyword" id="searchKeyword" onkeydown="if(event.keyCode==13){javascript:fn_searchList(1);}"  type="text" th:value="${userVO.searchKeyword}" />
+							<input class="searchName" name="searchKeyword" id="searchKeyword" onkeydown="if(event.keyCode==13){javascript:fn_searchList(1);}"  type="text" th:value="${userDTO.searchKeyword}" />
 							<button type="button" class="grayBtn ico" onclick="javascript:fn_searchList(1);">
 								<img th:src="@{/admin/images/ico_search.png}"> 검색
 							</button>
@@ -119,7 +119,7 @@
 	//상세보기
 	const fn_selectUserDetail = function(userId) {
 // 		let url = /*[[@{/usermng/r/m/selectUserDetail.do}]]*/;
-		let frm = document.userVO;
+		let frm = document.userDTO;
 		frm.userId.value = userId;
 		frm.action = url;
 		frm.submit();

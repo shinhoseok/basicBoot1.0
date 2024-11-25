@@ -19,8 +19,8 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovSampleServiceImpl.class);
 
 	/** SampleDAO */
-	@Resource(name="sampleMapper")
-	private SampleMapper sampleDAO;
+//	@Resource(name="sampleMapper")
+//	private SampleMapper sampleDAO;
 
 	/** ID Generation */
 	@Resource(name = "egovIdGnrService")
@@ -41,7 +41,7 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 		vo.setId(id);
 		LOGGER.debug(vo.toString());
 
-		sampleDAO.insertSample(vo);
+//		sampleDAO.insertSample(vo);
 		return id;
 	}
 
@@ -53,7 +53,7 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 */
 	@Override
 	public void updateSample(SampleVO vo) throws Exception {
-		sampleDAO.updateSample(vo);
+//		sampleDAO.updateSample(vo);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 */
 	@Override
 	public void deleteSample(SampleVO vo) throws Exception {
-		sampleDAO.deleteSample(vo);
+//		sampleDAO.deleteSample(vo);
 	}
 
 	/**
@@ -75,7 +75,8 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 */
 	@Override
 	public SampleVO selectSample(SampleVO vo) throws Exception {
-		SampleVO resultVO = sampleDAO.selectSample(vo);
+//		SampleVO resultVO = sampleDAO.selectSample(vo);
+		SampleVO resultVO = null;
 		if (resultVO == null)
 			throw processException("info.nodata.msg");
 		return resultVO;
@@ -89,7 +90,8 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 */
 	@Override
 	public List<?> selectSampleList(SampleVO searchVO) throws Exception {
-		return sampleDAO.selectSampleList(searchVO);
+//		return sampleDAO.selectSampleList(searchVO);
+		return null;
 	}
 
 	/**
@@ -100,7 +102,8 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 */
 	@Override
 	public int selectSampleListTotCnt(SampleDefaultVO searchVO) {
-		return sampleDAO.selectSampleListTotCnt(searchVO);
+//		return sampleDAO.selectSampleListTotCnt(searchVO);
+		return 1;
 	}
 
 }

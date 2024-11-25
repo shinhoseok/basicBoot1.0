@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.basic.user.service.impl.UserMapper">
+<mapper namespace="com.basic.dao.mybatis.UserMybatis">
 	
 	<sql id="findUserListWhere">
 		<where>
@@ -25,7 +25,7 @@
 	작성자 : shin 
 	최초작성일 : 2024. 10.31
 	-->	
-	<select id="findUserListCnt" parameterType="userVO" resultType="int">
+	<select id="findUserListCnt" parameterType="userDTO" resultType="int">
 		<![CDATA[
 		SELECT COUNT (*) CNT FROM USERS
 		]]>
@@ -40,7 +40,7 @@
 	작성자 : shin
 	최초작성일 : 2024. 10.31
 	-->
-	<select id="findUserList" parameterType="userVO" resultType="userVO">
+	<select id="findUserList" parameterType="userDTO" resultType="userDTO">
 		<![CDATA[
 		SELECT A.*
 		  FROM (SELECT ROW_NUMBER () OVER (

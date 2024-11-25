@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.HashMap;
 
-@Configuration
+//@Configuration
 public class EgovConfigTransaction {
 
 	@Bean(name="txManager")

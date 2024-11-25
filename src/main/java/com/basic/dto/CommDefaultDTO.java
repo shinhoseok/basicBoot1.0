@@ -1,7 +1,6 @@
-package com.basic.common.service;
+package com.basic.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CommDefaultVO implements Serializable {
+public class CommDefaultDTO implements Serializable {
 	/** 검색조건 */
 	private String searchCondition = "";
 	/** 검색Keyword */

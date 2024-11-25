@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 
 @Configuration
-@MapperScan(basePackages="com.basic")
+@MapperScan(basePackages="com.basic.dao.mybatis")
 public class EgovConfigMapper {
 
 	@Bean

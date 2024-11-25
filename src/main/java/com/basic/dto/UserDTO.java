@@ -1,9 +1,7 @@
-package com.basic.user.service;
+package com.basic.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import com.basic.common.service.CommDefaultVO;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserVO extends CommDefaultVO implements Serializable {
+public class UserDTO extends CommDefaultDTO implements Serializable {
 	/** 페이징넘버 */
 	private String rowNumber;
 	/** 사용자 아이 */
