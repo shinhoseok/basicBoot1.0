@@ -47,28 +47,6 @@ String.prototype.cut = function(len, tail)
     return str;
 };
 
-fnPopupOpen = function(_url, _name, _width, _height, _scroll, _resizable, _status){
-	
-	var _tarurl =  typeof(_url) == "object" ?_url.href : _url;
-	_width = _width || 600;
-	_height = _height || 450;
-	_name = _name || "Pop";
-	var _Opts = "";
-	_Opts += "width="+_width;
-	_Opts += ",height="+_height;	
-	var left = (screen.availWidth - _width )/2;
-	var top = (screen.availHeight - _height )/2;
-	_Opts += ",left="+left;
-	_Opts += ",top="+top;
-	
-	_Opts += ",scrollbars="+(_scroll?_scroll:'no');
-	_Opts += ",resizable="+(_resizable?_resizable:'no');
-	_Opts += ",status="+(_status?_status:'no');
-	
-	var newWin = window.open(_tarurl , _name , _Opts);
-	return newWin;	
-};
-
 //여백제거
 trim = function (str){
 	str = str.replace(/(^\s*)|(\s*$)/gi, "");
@@ -90,22 +68,6 @@ fn_AllCheck = function( obj , eObj ){
     for(var i=0;i<_checkbox.length;i++){
         _checkbox[i].checked = _flag;
     }
-    
-};
-
-/**
- * 페이지 이동함수
- * parameter => form:폼
- *              pageNo:pageIndex
- *              action:URL
- * */
-_fn_paging = function(frm, pageNo, actUrl){
-
-    if( actUrl != ""){
-        frm.action = actUrl;
-    }
-    frm.pageIndex.value = pageNo;
-    frm.submit();
     
 };
 
@@ -226,34 +188,6 @@ function _jsHref(obj) {
     document.location.href = obj.href;    
 }
 
-
-/*
- * ajax 사용시 로딩바 적용 
- */
-
-function showLoadingBar()
-{	 
-	$("#overlay").css({	  
-	  width   : $(document).outerWidth(),
-	  height  : $(document).outerHeight()
-	});
-
-	$("#img-load").css({
-	  top  : ($(window).height() / 2 - 50),
-	  left : ($(window).width() / 2 - 50)
-	});
-
- 	$("#overlay").fadeIn();
-};
-
-/*
- * ajax 사용시 로딩바 숨기기 
- */
-function hideLoadingBar()
-{
-	$("#overlay").fadeOut();
-	$(document).scrollTop(0);
-};
 
 /**  
  * 1. 개요 : 테이블에 행추가 

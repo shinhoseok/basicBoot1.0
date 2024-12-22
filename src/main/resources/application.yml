@@ -1,13 +1,14 @@
 spring:
-  profiles:
-    active: dev
+  config:
+    activate:
+      on-profile: dev
 
 ---
 spring:
   profiles: local
 
 server:
-  port: 8080
+  port: 8081
 
 basic:
   datasource:
@@ -20,8 +21,8 @@ basic:
 spring:
   profiles: dev
 
-server:
-  port: 8080
+#server:
+#  port: 8080
 
 basic:
   datasource:

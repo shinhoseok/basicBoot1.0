@@ -33,8 +33,7 @@ import java.util.Properties;
 		EgovConfigMapper.class,
 		EgovConfigProperties.class,
 //		EgovConfigTransaction.class,
-		JpaTransactionManager.class,
-		EgovConfigValidation.class
+		JpaTransactionManager.class
 })
 public class EgovConfigWeb implements WebMvcConfigurer, ApplicationContextAware {
 
@@ -92,10 +91,17 @@ public class EgovConfigWeb implements WebMvcConfigurer, ApplicationContextAware 
 		interceptor.setParamName("language");
 		return interceptor;
 	}
+	
+	@Bean
+	public BasicInterceptor basicInterceptor() {
+		BasicInterceptor basicInterceptor = new BasicInterceptor();
+		return basicInterceptor;
+	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
+		registry.addInterceptor(basicInterceptor()).addPathPatterns("/**"); // 모든 경로에 대해 인터셉터 적용;
 	}
 
 	@Override

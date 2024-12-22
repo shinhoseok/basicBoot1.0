@@ -1,143 +1,114 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!-- <th:block th:replace="fragments/commonMeta.html :: meta"></th:block> -->
-<meta name="contextPath" content="/*[[@{/}]]*/">
-<title>주말대표</title>
-<link rel="stylesheet" th:href="@{/admin/css/common.css}" />
-<link rel="stylesheet" th:href="@{/admin/css/worksite.css}" />
-<script th:src="@{/admin/js/jquery-3.6.1.min.js}"></script>
-<script th:src="@{/admin/js/common.js}"></script>
-<script th:src="@{/admin/js/validation.js}"></script>
+    <title>주말대표</title>
+    <link rel="stylesheet" th:href="@{/admin/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/admin/css/worksite.css}" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
+    <link rel="stylesheet" th:href="@{/admin/css/jquery.dataTables.colResize.css}" />
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
+    <script th:src="@{/admin/js/jquery.dataTables.colResize.js}"></script>
+    <script th:src="@{/admin/js/common.js}"></script>
+    <script th:src="@{/admin/js/validation.js}"></script>
+    <style>
+        /* 테이블 레이아웃 설정 */
+        table {
+            table-layout: auto; /* 또는 fixed */
+            width: 100%; /* 테이블 너비를 100%로 설정 */
+        }
+    </style>
 </head>
 <body>
-	<div id="target">
-		<header th:insert="fragment/header :: headerFragment"></header>
-		<!--header End-->
-		<div class="wrap">
-			<div class="container">
-				<th:block th:insert="fragment/leftMenu :: leftMenuFragment"></th:block>
-				<div class="contents">
-					<p class="contentTitle">사용자 관리</p>
-					<p class="sub_path">
-						<img th:src="@{/admin/images/ico_home.png}" width="10" height="9" />&nbsp;〉&nbsp;사용자관리&nbsp;〉&nbsp;사용자관리
-					</p>
-					<form name="userForm" id="userForm" method="post">
-						<div class="selectBox">
-							<select class="w13p" name="searchCondition" id="searchCondition">
-								<option th:selected="${userDTO.searchCondition eq 'userNm'}" th:value="userNm" th:text="이름"></option>
-								<option th:selected="${userDTO.searchCondition eq 'emailAddr'}" th:value="emailAddr" th:text="이메일"></option>
-							</select>
-							<input class="searchName" name="searchKeyword" id="searchKeyword" onkeydown="if(event.keyCode==13){javascript:fn_searchList(1);}"  type="text" th:value="${userDTO.searchKeyword}" />
-							<button type="button" class="grayBtn ico" onclick="javascript:fn_searchList(1);">
-								<img th:src="@{/admin/images/ico_search.png}"> 검색
-							</button>
-						</div>
-					</form>
-					<div class="tableLayer">
-						<table class="tableList">
-							<caption></caption>
-							<colgroup>
-								<col width="5%">
-								<col width="20%">
-								<col width="25%">
-								<col width="20%">
-								<col width="20%">
-							</colgroup>
-							<thead>
-								<th class="noBg">아이디</th>
-								<th sortId="name">성명 <span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span> <span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
-								</th>
-								<th>휴대폰번호</th>
-								<th sortId="email">이메일 <span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span> <span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
-								</th>
-								<th sortId="regDt">가입일자 <span class="arrow_ascending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span> <span class="arrow_descending"><a onclick="javascript:fn_sort(this.parentNode)" href="javascript:void(0);"></a></span>
-								</th>
-							</thead>
-							<tbody>
-								<tr th:if="${rslt.resultListCnt} > 0" th:each="list : ${rslt.resultList}" th:onclick="fn_selectUserDetail([[${list.userId}]]);" style="cursor: pointer;" class="row">
-									<td th:text="${list.userId}"></td>
-									<td th:text="${list.name}"></td>
-									<td th:text="${list.phoneNumber}"></td>
-									<td th:text="${list.email}"></td>
-									<td th:text="${list.regDt}"></td>
-								</tr>
-								<tr th:unless="${rslt.resultListCnt} > 0" class="row">
-									<td colspan="8">데이터가 없습니다.</td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="T_btnLayer fr">
-							<a href="javascript:void(0);" onclick="javascript:fn_insertUser();"><button type="button" class="blueBtn L">등록</button></a>
-						</div>
-					</div>
-					<!--페이징-->
-					<div class="paging_place">
-						<div class="paging_wrap" th:utext="${#basicPaginationFormat.paginationFormat(rslt.paginationInfo, 'fn_searchList')}"></div>
-					</div>
-				</div>
-			</div>
-			<!--container End-->
-		</div>
-		<!--wrap End-->
-		<footer th:insert="fragment/footer :: footerFragment"></footer>
-		<!--//footer-->
-	</div>
-	<script th:inline="javascript">
-	//백엔드 넘길 데이터 
-	let params = {};
-	
-	//검색
-	const fn_searchList = function(pageNo) {
-		params.pageIndex = pageNo;
-		params.searchKeyword = $("#searchKeyword").val();
-		params.searchCondition = $("#searchCondition").val();
-		fn_searchListAjax(params);
-	};
-	
-	
-	//ajax 전송 
-	const fn_searchListAjax = function(params) {
-		$.ajax({
-            url: contextPath+'/user/list',
-            type: 'get',
-            dataType :'html',
-            data: params,
-        }).done(function(r) {
-        	$('#target').html(r);
+    <div id="target">
+        <header th:insert="fragment/header :: headerFragment"></header>
+        <div class="wrap">
+            <div class="container">
+                <th:block th:insert="fragment/leftMenu :: leftMenuFragment"></th:block>
+                <div>
+                    <div>
+                        <table id="userTable">
+                            <caption></caption>
+                            <colgroup>
+                                <col width="5%">
+                                <col width="20%">
+                                <col width="25%">
+                                <col width="20%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>아이디</th>
+                                    <th>성명</th>
+                                    <th>휴대폰번호</th>
+                                    <th>이메일</th>
+                                    <th>가입일자</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <div class="T_btnLayer fr">
+                            <a href="javascript:void(0);" onclick="javascript:fn_insertUser();"><button type="button" class="blueBtn L">등록</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer th:insert="fragment/footer :: footerFragment"></footer>
+        </div>
+    </div>
+    <script th:inline="javascript">
+    $(document).ready(function () {
+        const table = $('#userTable').DataTable({
+            dom: 'Rlfrtip', // R: ColResize 활성화
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '/user/findUserListAjax',
+                type: 'POST',
+                data: function (d) {
+                    return {
+                        draw: d.draw,
+                        pageIndex: Math.ceil(d.start / d.length) + 1,
+                        recordCountPerPage: d.length,
+                        searchCondition: $('#searchCondition').val(),
+                        searchKeyword: $('#searchKeyword').val()
+                    };
+                }
+            },
+            columns: [
+                { data: 'userId', title: 'ID' },
+                { data: 'name', title: 'Name' },
+                { data: 'phoneNumber', title: 'Phone Number' },
+                { data: 'email', title: 'Email' },
+                { data: 'regDt', title: 'Registration Date' }
+            ],
+            scrollX: true,
+            colResize: {
+                realtime: true, // 드래그 중 실시간 반영
+                handleWidth: 10
+            },
+            language: {
+                loadingRecords: "데이터를 불러오는 중입니다...",
+                zeroRecords: "검색 결과가 없습니다."
+            },
+            paging: true,
+            lengthMenu: [10, 25, 50],
+            searching: true,
+            ordering: false,
+            autoWidth: false // 자동 너비 조정 비활성화
         });
-	};
-	
-	
-	//정렬
-	const fn_sort = function(obj) {
-		params.sortDescend = obj.className == "arrow_ascending" ? "asc" : "desc";
-		params.sortSubject = obj.parentNode.getAttributeNode("sortId").value;
-		fn_searchListAjax(params);
-	};
-	
-	//상세보기
-	const fn_selectUserDetail = function(userId) {
-// 		let url = /*[[@{/usermng/r/m/selectUserDetail.do}]]*/;
-		let frm = document.userDTO;
-		frm.userId.value = userId;
-		frm.action = url;
-		frm.submit();
-	}
-	
-	//사용자 등록
-	const fn_insertUser = function() {
-		let frm = document.userForm;
-		// 폼이 로드되었는지 확인
-        if (frm) {
-            frm.action = document.querySelector('meta[name="contextPath"]').content + "/usermng/r/m/insertUser.do";
-            frm.submit();
-        } else {
-            console.error("폼을 찾을 수 없습니다.");
-        }
-// 		frm.action = contextPath+ "/usermng/r/m/insertUser.do";
-// 		frm.submit();
-	};
-	</script>
+
+        // 열 크기 초기화 (더블클릭)
+        $('#userTable').on('dblclick', 'th', function () {
+            const columnIndex = $(this).index();
+            table.column(columnIndex).header().style.width = '';
+            table.columns.adjust().draw();
+        });
+    });
+    </script>
 </body>
 </html>

@@ -27,7 +27,7 @@ public class EgovSampleController {
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
 
-	@GetMapping("/")
+//	@GetMapping("/")
 	public String search(@ModelAttribute SampleVO sampleVO, Model model) throws Exception {
 		return this.list(sampleVO, model);
 	}

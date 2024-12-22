@@ -17,7 +17,7 @@ import java.util.HashMap;
 //@Configuration
 public class EgovConfigTransaction {
 
-	@Bean(name="txManager")
+	@Bean(name = "txManager")
 	public DataSourceTransactionManager txManager(@Qualifier("dataSource") DataSource dataSource) {
 		DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
 		dataSourceTransactionManager.setDataSource(dataSource);

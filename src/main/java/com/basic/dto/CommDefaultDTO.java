@@ -21,6 +21,7 @@ public class CommDefaultDTO implements Serializable {
 	private String sortDescend = "";
 	/** 현재페이지 */
 	private int pageIndex = 1;
+	private int draw = 1;
 	/** 한페이지에 보여줄 로우 */
 	private int pageUnit = 10;
 	/** 페이지리스트에 게시되는 페이지건수 */

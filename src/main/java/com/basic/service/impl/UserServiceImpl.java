@@ -1,5 +1,6 @@
 package com.basic.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,30 +37,31 @@ public class UserServiceImpl extends EgovAbstractServiceImpl implements UserServ
 	
 	public Map<String, Object> findUserList(UserDTO userDTO) throws Exception {
 		LOGGER.debug("findUserList service>>>");
-		Map<String, Object> rsltMap = new HashMap<>();
-		userDTO.setPageUnit(propertiesService.getInt("pageUnit"));
-		userDTO.setPageSize(propertiesService.getInt("pageSize"));
 
-		// pagination setting
-		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(userDTO.getPageIndex());
-		paginationInfo.setRecordCountPerPage(userDTO.getPageUnit());
-		paginationInfo.setPageSize(userDTO.getPageSize());
+	    // Pagination 설정
+	    userDTO.setPageUnit(propertiesService.getInt("pageUnit"));
+	    userDTO.setPageSize(propertiesService.getInt("pageSize"));
 
-		userDTO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		userDTO.setLastIndex(paginationInfo.getLastRecordIndex());
-		userDTO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		
-		int cnt = userDAO.findUserListCnt(userDTO);
-		paginationInfo.setTotalRecordCount(cnt);
-		List<UserDTO> resultList = null;
-		if(cnt > 0) {
-			resultList = userDAO.findUserList(userDTO);
-		}
-		rsltMap.put("resultList", resultList);
-		rsltMap.put("resultListCnt", cnt);
-		rsltMap.put("paginationInfo", paginationInfo);
-		
-		return rsltMap;
+	    PaginationInfo paginationInfo = new PaginationInfo();
+	    paginationInfo.setCurrentPageNo(userDTO.getPageIndex());
+	    paginationInfo.setRecordCountPerPage(userDTO.getPageUnit());
+	    paginationInfo.setPageSize(userDTO.getPageSize());
+
+	    userDTO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+	    userDTO.setLastIndex(paginationInfo.getLastRecordIndex());
+	    userDTO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+	    // 데이터 조회
+	    int totalRecords = userDAO.findUserListCnt(userDTO);
+	    List<UserDTO> userList = (totalRecords > 0) ? userDAO.findUserList(userDTO) : new ArrayList<>();
+
+	    // DataTables 형식으로 데이터 매핑
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("draw", userDTO.getDraw()); // DataTables 요청의 draw 값
+	    response.put("recordsTotal", totalRecords); // 전체 데이터 수
+	    response.put("recordsFiltered", totalRecords); // 필터링된 데이터 수
+	    response.put("data", userList); // 데이터 목록
+
+	    return response;
 	}
 }
